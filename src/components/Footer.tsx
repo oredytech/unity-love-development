@@ -85,6 +85,17 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; {new Date().getFullYear()} FOSSHID. Tous droits réservés.</p>
+          <p className="mt-2">
+            Conçu et développé par{" "}
+            <a
+              href="https://oredytechnologies.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-fosshid-blue hover:text-fosshid-blue/80"
+            >
+              Oredy Technologies
+            </a>
+          </p>
         </div>
       </div>
     </footer>
