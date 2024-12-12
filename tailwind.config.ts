@@ -25,9 +25,9 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         fosshid: {
-          blue: "#D3E4FD",
-          green: "#F2FCE2",
-          yellow: "#FEF7CD",
+          blue: "#0EA5E9",
+          red: "#ea384c",
+          yellow: "#F97316",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
