@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Envelope } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const Newsletter = () => {
@@ -19,7 +19,7 @@ const Newsletter = () => {
     <section className="py-16 bg-fosshid-green/20">
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto text-center">
-          <Envelope className="h-12 w-12 text-gray-800 mx-auto mb-4" />
+          <Mail className="h-12 w-12 text-gray-800 mx-auto mb-4" />
           <h2 className="text-3xl font-bold text-gray-800 mb-4">
             Restez informé
           </h2>
