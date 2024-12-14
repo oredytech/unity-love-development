@@ -18,7 +18,7 @@ const Navigation = () => {
             <Link to="/">
               <img
                 className="h-12 w-auto"
-                src="/lovable-uploads/e8f4d173-dd5a-4746-83f4-3b9621150f80.png"
+                src="/lovable-uploads/d4de72e8-429c-4475-b403-708956adae99.png"
                 alt="FOSSHID Logo"
               />
             </Link>

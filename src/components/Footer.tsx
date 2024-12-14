@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <img
-              src="/lovable-uploads/e8f4d173-dd5a-4746-83f4-3b9621150f80.png"
+              src="/lovable-uploads/d4de72e8-429c-4475-b403-708956adae99.png"
               alt="FOSSHID Logo"
               className="h-12 w-auto mb-4"
             />
