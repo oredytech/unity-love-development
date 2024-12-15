@@ -10,6 +10,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 interface WordPressPost {
   id: number;
@@ -47,12 +49,23 @@ const BlogPage = () => {
 
   const latestPosts = posts.slice(0, 5);
   const allPosts = posts;
+  const featuredImage = posts[0]?._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
 
   return (
-    <div className="min-h-screen pt-16">
+    <div className="min-h-screen">
+      <Navigation />
       {/* Hero Carousel */}
-      <section className="relative bg-gray-900 py-16">
-        <div className="container mx-auto px-4">
+      <section 
+        className="relative bg-gray-900 py-16"
+        style={{
+          backgroundImage: `url(${featuredImage})`,
+          backgroundAttachment: 'fixed',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="container mx-auto px-4 relative z-10">
           <Carousel className="w-full max-w-5xl mx-auto">
             <CarouselContent>
               {latestPosts.map((post) => (
@@ -144,6 +157,7 @@ const BlogPage = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
