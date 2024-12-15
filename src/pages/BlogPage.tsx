@@ -12,6 +12,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { useState } from "react";
 
 interface WordPressPost {
   id: number;
@@ -42,6 +43,7 @@ const BlogPage = () => {
     queryKey: ["posts"],
     queryFn: fetchPosts,
   });
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   if (isLoading) return <div className="text-center py-10">Chargement...</div>;
   if (error) return <div className="text-center py-10">Erreur de chargement</div>;
@@ -49,7 +51,7 @@ const BlogPage = () => {
 
   const latestPosts = posts.slice(0, 5);
   const allPosts = posts;
-  const featuredImage = posts[0]?._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+  const currentFeaturedImage = latestPosts[currentSlide]?._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
 
   return (
     <div className="min-h-screen">
@@ -58,15 +60,19 @@ const BlogPage = () => {
       <section 
         className="relative bg-gray-900 py-16"
         style={{
-          backgroundImage: `url(${featuredImage})`,
+          backgroundImage: `url(${currentFeaturedImage})`,
           backgroundAttachment: 'fixed',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          transition: 'background-image 0.3s ease-in-out',
         }}
       >
         <div className="absolute inset-0 bg-black/70" />
         <div className="container mx-auto px-4 relative z-10">
-          <Carousel className="w-full max-w-5xl mx-auto">
+          <Carousel 
+            className="w-full max-w-5xl mx-auto"
+            onSelect={(index) => setCurrentSlide(index)}
+          >
             <CarouselContent>
               {latestPosts.map((post) => (
                 <CarouselItem key={post.id}>
