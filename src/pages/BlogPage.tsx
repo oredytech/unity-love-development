@@ -90,9 +90,7 @@ const BlogPage = () => {
                         dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
                       />
                       <Link
-                        to={post.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        to={`/blog/${post.id}`}
                         className="inline-flex items-center text-white hover:text-fosshid-blue transition-colors"
                       >
                         Lire plus
@@ -142,9 +140,7 @@ const BlogPage = () => {
                     className="w-full justify-center"
                   >
                     <Link
-                      to={post.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      to={`/blog/${post.id}`}
                       className="inline-flex items-center"
                     >
                       Lire plus
