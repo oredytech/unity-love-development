@@ -26,16 +26,16 @@ const Events = () => {
   return (
     <section className="relative py-16">
       <div 
-        className="absolute inset-0 bg-cover bg-center z-0"
+        className="absolute inset-0 bg-cover bg-center bg-fixed z-0"
         style={{
           backgroundImage: "url('/lovable-uploads/a943ea3f-e85c-4bd0-95f8-37dfd5de55ef.png')"
         }}
       />
-      <div className="absolute inset-0 bg-fosshid-yellow/40 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-fosshid-blue/60 to-fosshid-yellow/40 z-0"></div>
       <div className="container mx-auto px-6 relative z-10">
-        <h2 className="text-3xl font-bold text-center mb-12">Événements à venir</h2>
+        <h2 className="text-3xl font-bold text-center mb-12 text-white">Événements à venir</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.map((event, index) => (
+          {events.map((event) => (
             <Card key={event.id} className="p-4">
               <h3 className="text-xl font-semibold">{event.title}</h3>
               <p className="text-gray-600">{event.date}</p>
