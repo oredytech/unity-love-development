@@ -1,30 +1,58 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+
+interface WordPressPost {
+  id: number;
+  title: {
+    rendered: string;
+  };
+  excerpt: {
+    rendered: string;
+  };
+  date: string;
+  _embedded?: {
+    "wp:featuredmedia"?: Array<{
+      source_url: string;
+    }>;
+  };
+}
+
+const fetchLatestPosts = async () => {
+  const response = await axios.get<WordPressPost[]>(
+    "https://totalementactus.net/wp-json/wp/v2/posts?_embed&per_page=3"
+  );
+  return response.data;
+};
 
 const LatestArticles = () => {
-  const articles = [
-    {
-      id: 1,
-      title: "Formation en agriculture durable",
-      excerpt: "Découvrez comment notre programme aide les agriculteurs locaux",
-      image: "/lovable-uploads/e8f4d173-dd5a-4746-83f4-3b9621150f80.png",
-      date: "2024-03-15",
-    },
-    {
-      id: 2,
-      title: "Projet d'assainissement des routes",
-      excerpt: "Un nouveau projet pour améliorer l'accès aux villages",
-      image: "/lovable-uploads/e8f4d173-dd5a-4746-83f4-3b9621150f80.png",
-      date: "2024-03-10",
-    },
-    {
-      id: 3,
-      title: "Initiative de santé communautaire",
-      excerpt: "Bilan de notre campagne de vaccination",
-      image: "/lovable-uploads/e8f4d173-dd5a-4746-83f4-3b9621150f80.png",
-      date: "2024-03-05",
-    },
-  ];
+  const { data: articles, isLoading, error } = useQuery({
+    queryKey: ["latestPosts"],
+    queryFn: fetchLatestPosts,
+  });
+
+  if (isLoading) {
+    return (
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center">Chargement des articles...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center text-red-600">
+            Erreur lors du chargement des articles
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 bg-white">
@@ -40,14 +68,17 @@ const LatestArticles = () => {
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {articles.map((article) => (
+          {articles?.map((article) => (
             <article
               key={article.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
             >
               <img
-                src={article.image}
-                alt={article.title}
+                src={
+                  article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                  "/placeholder.svg"
+                }
+                alt={article.title.rendered}
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
@@ -58,10 +89,14 @@ const LatestArticles = () => {
                     year: "numeric",
                   })}
                 </time>
-                <h3 className="text-xl font-semibold text-gray-800 mt-2 mb-3">
-                  {article.title}
-                </h3>
-                <p className="text-gray-600 mb-4">{article.excerpt}</p>
+                <h3 
+                  className="text-xl font-semibold text-gray-800 mt-2 mb-3"
+                  dangerouslySetInnerHTML={{ __html: article.title.rendered }}
+                />
+                <div 
+                  className="text-gray-600 mb-4 line-clamp-3"
+                  dangerouslySetInnerHTML={{ __html: article.excerpt.rendered }}
+                />
                 <Link
                   to={`/blog/${article.id}`}
                   className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center"
