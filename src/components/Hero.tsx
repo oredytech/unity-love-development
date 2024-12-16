@@ -14,21 +14,21 @@ const Hero = () => {
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="w-full md:w-1/2 text-center md:text-left">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              Unité, Amour, Développement
+              Fondation Saidi SHISHOMBO pour le Développement
             </h1>
             <p className="text-xl md:text-2xl text-white/90 mb-8">
-              Ensemble, construisons un avenir meilleur pour la République Démocratique du Congo
+              Unité, Amour, Développement - Ensemble pour un avenir meilleur en République Démocratique du Congo
             </p>
             <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
               <Link
                 to="/join"
-                className="bg-fosshid-yellow hover:bg-yellow-400 text-gray-800 font-bold py-3 px-8 rounded-lg transition duration-300"
+                className="bg-fosshid-yellow hover:bg-yellow-400 text-gray-800 font-bold py-3 px-8 rounded-lg transition-duration-300"
               >
                 Nous Rejoindre
               </Link>
               <Link
                 to="/donate"
-                className="bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-8 rounded-lg transition duration-300"
+                className="bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-8 rounded-lg transition-duration-300"
               >
                 Faire un Don
               </Link>
