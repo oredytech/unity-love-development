@@ -67,7 +67,7 @@ const BlogPage = () => {
           transition: 'background-image 0.3s ease-in-out',
         }}
       >
-        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-black/70 pt-32 pb-16" />
         <div className="container mx-auto px-4 relative z-10">
           <Carousel 
             className="w-full max-w-5xl mx-auto"
