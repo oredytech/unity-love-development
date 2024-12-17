@@ -10,6 +10,7 @@ import ContactPage from "./pages/ContactPage";
 import BlogPage from "./pages/BlogPage";
 import SinglePostPage from "./pages/SinglePostPage";
 import DonationPage from "./pages/DonationPage";
+import MembershipPage from "./pages/MembershipPage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<SinglePostPage />} />
             <Route path="/donate" element={<DonationPage />} />
+            <Route path="/membership" element={<MembershipPage />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
