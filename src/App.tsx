@@ -11,6 +11,7 @@ import BlogPage from "./pages/BlogPage";
 import SinglePostPage from "./pages/SinglePostPage";
 import DonationPage from "./pages/DonationPage";
 import MembershipPage from "./pages/MembershipPage";
+import VolunteerPage from "./pages/VolunteerPage";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/blog/:id" element={<SinglePostPage />} />
             <Route path="/donate" element={<DonationPage />} />
             <Route path="/membership" element={<MembershipPage />} />
+            <Route path="/volunteer" element={<VolunteerPage />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
