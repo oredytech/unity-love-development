@@ -5,9 +5,10 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { Facebook, Twitter, Linkedin, Instagram, List } from "lucide-react";
+import { Facebook, Twitter, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import RecentComments from "@/components/blog/RecentComments";
+import RelatedPosts from "@/components/blog/RelatedPosts";
 
 interface WordPressPost {
   id: number;
@@ -106,7 +107,7 @@ const SinglePostPage = () => {
           <div className="container mx-auto px-4 h-full flex items-center relative z-10">
             <div className="max-w-3xl">
               <h1
-                className="text-4xl font-bold text-white mb-4"
+                className="text-4xl md:text-5xl font-bold text-white mb-6"
                 dangerouslySetInnerHTML={{ __html: post.title.rendered }}
               />
               <div className="flex items-center text-white/80 space-x-4">
@@ -125,7 +126,7 @@ const SinglePostPage = () => {
             <div className="lg:col-span-2">
               <article>
                 <div
-                  className="prose prose-lg dark:prose-invert mx-auto"
+                  className="prose prose-lg dark:prose-invert mx-auto [&>h1]:text-3xl [&>h1]:font-bold [&>h1]:mt-8 [&>h1]:mb-4 [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:mt-6 [&>h2]:mb-3 [&>h3]:text-xl [&>h3]:font-medium [&>h3]:mt-4 [&>h3]:mb-2 [&>p]:mb-4 [&>ul]:list-disc [&>ul]:ml-6 [&>ol]:list-decimal [&>ol]:ml-6 [&>blockquote]:border-l-4 [&>blockquote]:border-fosshid-blue [&>blockquote]:pl-4 [&>blockquote]:italic"
                   dangerouslySetInnerHTML={{ __html: post.content.rendered }}
                 />
                 
@@ -158,79 +159,8 @@ const SinglePostPage = () => {
 
             {/* Sidebar */}
             <aside className="space-y-8">
-              {/* Recent Comments */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <List className="h-5 w-5" />
-                    Commentaires Récents
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {isLoadingComments ? (
-                    <p>Chargement des commentaires...</p>
-                  ) : comments?.length ? (
-                    <div className="space-y-4">
-                      {comments.map((comment) => (
-                        <div key={comment.id} className="space-y-1">
-                          <div className="font-medium">{comment.author_name}</div>
-                          <div
-                            className="text-sm text-muted-foreground line-clamp-2"
-                            dangerouslySetInnerHTML={{
-                              __html: comment.content.rendered,
-                            }}
-                          />
-                          <time className="text-xs text-muted-foreground">
-                            {format(new Date(comment.date), "d MMMM yyyy", {
-                              locale: fr,
-                            })}
-                          </time>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p>Aucun commentaire pour le moment</p>
-                  )}
-                </CardContent>
-              </Card>
-
-              {/* Related Articles */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <List className="h-5 w-5" />
-                    Articles Similaires
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {isLoadingRelated ? (
-                    <p>Chargement des articles...</p>
-                  ) : relatedPosts?.length ? (
-                    <div className="space-y-4">
-                      {relatedPosts.map((relatedPost) => (
-                        <article key={relatedPost.id} className="space-y-2">
-                          <img
-                            src={
-                              relatedPost._embedded?.["wp:featuredmedia"]?.[0]
-                                ?.source_url || "/placeholder.svg"
-                            }
-                            alt={relatedPost.title.rendered}
-                            className="w-full h-32 object-cover rounded-lg"
-                          />
-                          <h3
-                            className="font-medium line-clamp-2"
-                            dangerouslySetInnerHTML={{
-                              __html: relatedPost.title.rendered,
-                            }}
-                          />
-                        </article>
-                      ))}
-                    </div>
-                  ) : (
-                    <p>Aucun article similaire trouvé</p>
-                  )}
-                </CardContent>
-              </Card>
+              <RecentComments comments={comments} isLoading={isLoadingComments} />
+              <RelatedPosts posts={relatedPosts} isLoading={isLoadingRelated} />
             </aside>
           </div>
         </div>
