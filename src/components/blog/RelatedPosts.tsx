@@ -7,7 +7,6 @@ interface WordPressPost {
   title: {
     rendered: string;
   };
-  slug: string;
   _embedded?: {
     "wp:featuredmedia"?: Array<{
       source_url: string;
@@ -37,7 +36,7 @@ const RelatedPosts = ({ posts, isLoading }: RelatedPostsProps) => {
             {posts.map((post) => (
               <Link
                 key={post.id}
-                to={`/blog/${post.slug}`}
+                to={`/blog/${post.id}`}
                 className="block group"
               >
                 <article className="space-y-3">
