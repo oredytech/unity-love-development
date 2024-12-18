@@ -34,6 +34,9 @@ const Navigation = () => {
             <Link to="/blog" className="text-gray-700 dark:text-gray-200 hover:text-fosshid-blue dark:hover:text-fosshid-blue px-3 py-2 rounded-md text-sm font-medium">
               Blog
             </Link>
+            <Link to="/gallery" className="text-gray-700 dark:text-gray-200 hover:text-fosshid-blue dark:hover:text-fosshid-blue px-3 py-2 rounded-md text-sm font-medium">
+              Galerie
+            </Link>
             <Link to="/contact" className="text-gray-700 dark:text-gray-200 hover:text-fosshid-blue dark:hover:text-fosshid-blue px-3 py-2 rounded-md text-sm font-medium">
               Contact
             </Link>
@@ -81,6 +84,13 @@ const Navigation = () => {
               onClick={toggleMenu}
             >
               Blog
+            </Link>
+            <Link
+              to="/gallery"
+              className="text-gray-700 dark:text-gray-200 hover:text-fosshid-blue dark:hover:text-fosshid-blue block px-3 py-2 rounded-md text-base font-medium"
+              onClick={toggleMenu}
+            >
+              Galerie
             </Link>
             <Link
               to="/contact"
