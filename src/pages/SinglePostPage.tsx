@@ -9,6 +9,7 @@ import { Facebook, Twitter, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RecentComments from "@/components/blog/RecentComments";
 import RelatedPosts from "@/components/blog/RelatedPosts";
+import CommentForm from "@/components/blog/CommentForm";
 
 interface WordPressPost {
   id: number;
@@ -153,6 +154,12 @@ const SinglePostPage = () => {
                   >
                     <Linkedin className="h-4 w-4" />
                   </Button>
+                </div>
+
+                {/* Comment Form Section */}
+                <div className="mt-12">
+                  <h2 className="text-2xl font-bold mb-6">Laisser un commentaire</h2>
+                  <CommentForm postId={id} />
                 </div>
               </article>
             </div>
