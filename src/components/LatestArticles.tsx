@@ -34,7 +34,7 @@ const LatestArticles = () => {
 
   if (isLoading) {
     return (
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-6">
           <div className="text-center">Chargement des articles...</div>
         </div>
@@ -44,7 +44,7 @@ const LatestArticles = () => {
 
   if (error) {
     return (
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-6">
           <div className="text-center text-red-600">
             Erreur lors du chargement des articles
@@ -55,10 +55,10 @@ const LatestArticles = () => {
   }
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-background">
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800">Derniers Articles</h2>
+          <h2 className="text-3xl font-bold text-foreground">Derniers Articles</h2>
           <Link
             to="/blog"
             className="flex items-center text-blue-600 hover:text-blue-700"
@@ -71,7 +71,7 @@ const LatestArticles = () => {
           {articles?.map((article) => (
             <article
               key={article.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              className="bg-background rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
             >
               <img
                 src={
@@ -82,7 +82,7 @@ const LatestArticles = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
-                <time className="text-sm text-gray-500">
+                <time className="text-sm text-muted-foreground">
                   {new Date(article.date).toLocaleDateString("fr-FR", {
                     day: "numeric",
                     month: "long",
@@ -90,11 +90,11 @@ const LatestArticles = () => {
                   })}
                 </time>
                 <h3 
-                  className="text-xl font-semibold text-gray-800 mt-2 mb-3"
+                  className="text-xl font-semibold text-foreground mt-2 mb-3"
                   dangerouslySetInnerHTML={{ __html: article.title.rendered }}
                 />
                 <div 
-                  className="text-gray-600 mb-4 line-clamp-3"
+                  className="text-muted-foreground mb-4 line-clamp-3"
                   dangerouslySetInnerHTML={{ __html: article.excerpt.rendered }}
                 />
                 <Link
