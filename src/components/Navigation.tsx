@@ -17,7 +17,7 @@ const Navigation = () => {
           <div className="flex-shrink-0 flex items-center">
             <Link to="/">
               <img
-                className="h-12 w-auto"
+                className="h-12 w-auto object-contain"
                 src="/lovable-uploads/bdfb01d9-5048-4900-b258-e6a5a8711939.png"
                 alt="FOSSHID Logo"
               />
