@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import {
@@ -83,7 +84,7 @@ const BlogPage = () => {
                         "/placeholder.svg"
                       }
                       alt={post.title.rendered}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-cover mt-[70px]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-6">
