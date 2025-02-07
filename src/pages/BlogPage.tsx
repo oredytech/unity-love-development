@@ -32,26 +32,31 @@ interface WordPressPost {
   };
 }
 
-const fetchPosts = async () => {
+const fetchPosts = async (page: number) => {
   const response = await axios.get<WordPressPost[]>(
-    "https://totalementactus.net/wp-json/wp/v2/posts?_embed&per_page=10"
+    `https://totalementactus.net/wp-json/wp/v2/posts?_embed&per_page=12&page=${page}`
   );
-  return response.data;
+  return {
+    posts: response.data,
+    totalPages: parseInt(response.headers['x-wp-totalpages'] || '1'),
+  };
 };
 
 const BlogPage = () => {
-  const { data: posts, isLoading, error } = useQuery({
-    queryKey: ["posts"],
-    queryFn: fetchPosts,
-  });
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["posts", currentPage],
+    queryFn: () => fetchPosts(currentPage),
+  });
 
   if (isLoading) return <div className="text-center py-10">Chargement...</div>;
   if (error) return <div className="text-center py-10">Erreur de chargement</div>;
-  if (!posts) return null;
+  if (!data?.posts) return null;
 
-  const latestPosts = posts.slice(0, 5);
-  const allPosts = posts;
+  const latestPosts = data.posts.slice(0, 5);
+  const allPosts = data.posts;
   const currentFeaturedImage = latestPosts[currentSlide]?._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
 
   return (
@@ -157,6 +162,24 @@ const BlogPage = () => {
                 </div>
               </article>
             ))}
+          </div>
+
+          {/* Pagination */}
+          <div className="mt-8 flex justify-center gap-4">
+            <Button 
+              variant="outline"
+              onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+              disabled={currentPage === 1}
+            >
+              Page précédente
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => setCurrentPage(prev => prev + 1)}
+              disabled={currentPage >= (data.totalPages || 1)}
+            >
+              Page suivante
+            </Button>
           </div>
         </div>
       </section>
