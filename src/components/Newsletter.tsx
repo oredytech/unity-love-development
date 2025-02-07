@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Mail } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
@@ -27,7 +28,7 @@ const Newsletter = () => {
             Inscrivez-vous à notre newsletter pour recevoir les dernières actualités
             et mises à jour de nos projets.
           </p>
-          <form onSubmit={handleSubmit} className="flex gap-4 max-w-md mx-auto">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <input
               type="email"
               value={email}
