@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 
 const Hero = () => {
@@ -34,7 +35,7 @@ const Hero = () => {
               </Link>
             </div>
           </div>
-          <div className="w-full md:w-1/2 mt-12 md:mt-0">
+          <div className="w-full md:w-1/2 mt-12 md:mt-0 hidden md:block">
             <img
               src="/lovable-uploads/e8f4d173-dd5a-4746-83f4-3b9621150f80.png"
               alt="FOSSHID Impact"
