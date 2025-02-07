@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -18,7 +19,7 @@ const Navigation = () => {
             <Link to="/">
               <img
                 className="h-12 w-auto object-contain"
-                src="/lovable-uploads/bdfb01d9-5048-4900-b258-e6a5a8711939.png"
+                src="/lovable-uploads/fa12d746-0a01-48cb-aa7f-92c9e72a37e4.png"
                 alt="FOSSHID Logo"
               />
             </Link>
