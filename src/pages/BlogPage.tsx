@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import {
@@ -102,7 +101,7 @@ const BlogPage = () => {
                         dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
                       />
                       <Link
-                        to={`/blog/${post.id}`}
+                        to={`/blog/${post.slug}`}
                         className="inline-flex items-center text-white hover:text-fosshid-blue transition-colors"
                       >
                         Lire plus
@@ -152,7 +151,7 @@ const BlogPage = () => {
                     className="w-full justify-center"
                   >
                     <Link
-                      to={`/blog/${post.id}`}
+                      to={`/blog/${post.slug}`}
                       className="inline-flex items-center"
                     >
                       Lire plus

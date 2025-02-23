@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { format } from "date-fns";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import RecentComments from "@/components/blog/RecentComments";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import CommentForm from "@/components/blog/CommentForm";
+import { Helmet } from "react-helmet";
 
 interface WordPressPost {
   id: number;
@@ -19,7 +20,11 @@ interface WordPressPost {
   content: {
     rendered: string;
   };
+  excerpt: {
+    rendered: string;
+  };
   date: string;
+  slug: string;
   categories: number[];
   _embedded?: {
     author?: Array<{
@@ -31,25 +36,25 @@ interface WordPressPost {
   };
 }
 
-interface WordPressComment {
-  id: number;
-  author_name: string;
-  content: {
-    rendered: string;
-  };
-  date: string;
-}
-
 const SinglePostPage = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
+  const navigate = useNavigate();
 
   const { data: post, isLoading: isLoadingPost } = useQuery({
-    queryKey: ["post", id],
+    queryKey: ["post", slug],
     queryFn: async () => {
-      const response = await axios.get<WordPressPost>(
-        `https://totalementactus.net/wp-json/wp/v2/posts/${id}?_embed`
-      );
-      return response.data;
+      try {
+        const response = await axios.get<WordPressPost[]>(
+          `https://totalementactus.net/wp-json/wp/v2/posts?slug=${slug}&_embed`
+        );
+        if (response.data.length === 0) {
+          throw new Error("Post not found");
+        }
+        return response.data[0];
+      } catch (error) {
+        navigate("/blog");
+        throw error;
+      }
     },
   });
 
@@ -58,17 +63,17 @@ const SinglePostPage = () => {
     enabled: !!post?.categories?.[0],
     queryFn: async () => {
       const response = await axios.get<WordPressPost[]>(
-        `https://totalementactus.net/wp-json/wp/v2/posts?categories=${post?.categories[0]}&per_page=3&exclude=${id}&_embed`
+        `https://totalementactus.net/wp-json/wp/v2/posts?categories=${post?.categories[0]}&per_page=3&exclude=${post?.id}&_embed`
       );
       return response.data;
     },
   });
 
   const { data: comments, isLoading: isLoadingComments } = useQuery({
-    queryKey: ["comments", id],
+    queryKey: ["comments", post?.id],
     queryFn: async () => {
       const response = await axios.get<WordPressComment[]>(
-        `https://totalementactus.net/wp-json/wp/v2/comments?post=${id}&per_page=5`
+        `https://totalementactus.net/wp-json/wp/v2/comments?post=${post?.id}&per_page=5`
       );
       return response.data;
     },
@@ -80,6 +85,7 @@ const SinglePostPage = () => {
   const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
   const author = post._embedded?.author?.[0]?.name;
   const formattedDate = format(new Date(post.date), "d MMMM yyyy", { locale: fr });
+  const description = post.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 160);
 
   const shareUrl = window.location.href;
   const shareTitle = post.title.rendered;
@@ -89,15 +95,31 @@ const SinglePostPage = () => {
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
       twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
       linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
+      whatsapp: `https://wa.me/?text=${encodeURIComponent(`${shareTitle} ${shareUrl}`)}`,
     };
     window.open(urls[platform as keyof typeof urls], "_blank");
   };
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>{post.title.rendered} - Totalement Actus</title>
+        <meta name="description" content={description} />
+        
+        <meta property="og:title" content={post.title.rendered} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={featuredImage} />
+        <meta property="og:url" content={shareUrl} />
+        <meta property="og:type" content="article" />
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title.rendered} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={featuredImage} />
+      </Helmet>
+
       <Navigation />
       <main className="pt-16">
-        {/* Hero Section */}
         <div
           className="relative h-[400px] bg-cover bg-center bg-no-repeat"
           style={{
@@ -120,10 +142,8 @@ const SinglePostPage = () => {
           </div>
         </div>
 
-        {/* Content Section with Sidebar */}
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content */}
             <div className="lg:col-span-2">
               <article>
                 <div
@@ -131,40 +151,28 @@ const SinglePostPage = () => {
                   dangerouslySetInnerHTML={{ __html: post.content.rendered }}
                 />
                 
-                {/* Social Sharing Buttons */}
                 <div className="mt-8 flex gap-4">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleShare("facebook")}
-                  >
+                  <Button variant="outline" size="icon" onClick={() => handleShare("facebook")}>
                     <Facebook className="h-4 w-4" />
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleShare("twitter")}
-                  >
+                  <Button variant="outline" size="icon" onClick={() => handleShare("twitter")}>
                     <Twitter className="h-4 w-4" />
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleShare("linkedin")}
-                  >
+                  <Button variant="outline" size="icon" onClick={() => handleShare("linkedin")}>
                     <Linkedin className="h-4 w-4" />
+                  </Button>
+                  <Button variant="outline" onClick={() => handleShare("whatsapp")}>
+                    Partager sur WhatsApp
                   </Button>
                 </div>
 
-                {/* Comment Form Section */}
                 <div className="mt-12">
                   <h2 className="text-2xl font-bold mb-6">Laisser un commentaire</h2>
-                  <CommentForm postId={id} />
+                  <CommentForm postId={post.id} />
                 </div>
               </article>
             </div>
 
-            {/* Sidebar */}
             <aside className="space-y-8">
               <RecentComments comments={comments} isLoading={isLoadingComments} />
               <RelatedPosts posts={relatedPosts} isLoading={isLoadingRelated} />
