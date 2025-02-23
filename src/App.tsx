@@ -17,28 +17,30 @@ import GalleryPage from "./pages/GalleryPage";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<SinglePostPage />} />
-            <Route path="/donate" element={<DonationPage />} />
-            <Route path="/membership" element={<MembershipPage />} />
-            <Route path="/volunteer" element={<VolunteerPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </ThemeProvider>
-);
+const App = () => {
+  return (
+    <BrowserRouter>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<SinglePostPage />} />
+              <Route path="/donate" element={<DonationPage />} />
+              <Route path="/membership" element={<MembershipPage />} />
+              <Route path="/volunteer" element={<VolunteerPage />} />
+              <Route path="/gallery" element={<GalleryPage />} />
+            </Routes>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  );
+};
 
 export default App;
