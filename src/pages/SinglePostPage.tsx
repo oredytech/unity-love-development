@@ -33,6 +33,13 @@ interface WordPressPost {
     }>;
     "wp:featuredmedia"?: Array<{
       source_url: string;
+      media_details?: {
+        sizes?: {
+          full?: {
+            source_url: string;
+          };
+        };
+      };
     }>;
   };
 }
@@ -92,7 +99,8 @@ const SinglePostPage = () => {
   if (isLoadingPost) return <div className="text-center py-10">Chargement...</div>;
   if (!post) return null;
 
-  const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+  const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.full?.source_url || 
+                       post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
   const author = post._embedded?.author?.[0]?.name;
   const formattedDate = format(new Date(post.date), "d MMMM yyyy", { locale: fr });
   const description = post.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 160);
@@ -116,16 +124,18 @@ const SinglePostPage = () => {
         <title>{post.title.rendered} - Totalement Actus</title>
         <meta name="description" content={description} />
         
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
         <meta property="og:title" content={post.title.rendered} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={featuredImage} />
         <meta property="og:url" content={shareUrl} />
-        <meta property="og:type" content="article" />
+        {featuredImage && <meta property="og:image" content={featuredImage} />}
         
+        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title.rendered} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={featuredImage} />
+        {featuredImage && <meta name="twitter:image" content={featuredImage} />}
       </Helmet>
 
       <Navigation />
