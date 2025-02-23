@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import {
@@ -23,6 +24,7 @@ interface WordPressPost {
     rendered: string;
   };
   link: string;
+  slug: string;
   featured_media: number;
   _embedded?: {
     "wp:featuredmedia"?: Array<{

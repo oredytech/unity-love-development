@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
@@ -34,6 +35,15 @@ interface WordPressPost {
       source_url: string;
     }>;
   };
+}
+
+interface WordPressComment {
+  id: number;
+  content: {
+    rendered: string;
+  };
+  author_name: string;
+  date: string;
 }
 
 const SinglePostPage = () => {
