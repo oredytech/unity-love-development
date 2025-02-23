@@ -1,3 +1,4 @@
+
 import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -8,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <img
-              src="/lovable-uploads/bdfb01d9-5048-4900-b258-e6a5a8711939.png"
+              src="/lovable-uploads/fa12d746-0a01-48cb-aa7f-92c9e72a37e4.png"
               alt="FOSSHID Logo"
               className="h-12 w-auto mb-4"
             />
